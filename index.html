@@ -3,16 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Graph Generator</title>
+  <title>Graph Generator with Neon Border Effect</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #fff;
       text-align: center;
       margin: 20px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
     }
     .input-box {
       margin: 10px 0;
+      color: #fff;
+    }
+    input {
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #444;
+      padding: 8px;
+      border-radius: 5px;
+      margin-top: 5px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+    input::placeholder {
+      color: #bbb;
     }
     .options {
       margin: 15px 0;
@@ -21,15 +37,17 @@
       margin-top: 30px;
     }
     .graph-box {
-      border: 1px solid #ccc;
       border-radius: 8px;
       padding: 15px;
       margin: 20px auto;
       width: 80%;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      background-color: #1e1e1e;
+      animation: neonBorder 2s infinite alternate;
     }
     h3 {
       text-align: center;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
     }
     canvas {
       display: block;
@@ -43,14 +61,55 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      box-shadow: 0 0 10px rgba(76, 175, 80, 0.8);
+      transition: all 0.3s ease;
     }
     .download-btn:hover {
       background-color: #45a049;
+      box-shadow: 0 0 20px rgba(76, 175, 80, 1);
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.8);
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+      box-shadow: 0 0 20px rgba(0, 123, 255, 1);
+    }
+
+    /* Neon Border Animation */
+    @keyframes neonBorder {
+      0% {
+        border: 2px solid #ff007f;
+        box-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f, 0 0 30px #ff007f;
+      }
+      25% {
+        border: 2px solid #00ff00;
+        box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+      }
+      50% {
+        border: 2px solid #00aaff;
+        box-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff, 0 0 30px #00aaff;
+      }
+      75% {
+        border: 2px solid #ffcc00;
+        box-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00, 0 0 30px #ffcc00;
+      }
+      100% {
+        border: 2px solid #ff007f;
+        box-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f, 0 0 30px #ff007f;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Graph Generator</h1>
+  <h1>Graph Generator with Neon Border Effect</h1>
 
   <div class="input-box">
     <label for="xValues">X-Axis Values (comma-separated):</label><br>
@@ -107,29 +166,24 @@
     let normalGraphChart, curveGraphChart, bestFitChart;
 
     function generateGraphs() {
-      // Get input values
       const xValues = document.getElementById("xValues").value.split(',').map(Number);
       const yValues = document.getElementById("yValues").value.split(',').map(Number);
       const xLabel = document.getElementById("xLabel").value || 'X';
       const yLabel = document.getElementById("yLabel").value || 'Y';
 
-      // Check selected options
       const normalGraphChecked = document.getElementById("normalGraph").checked;
       const curveLinesChecked = document.getElementById("curveLines").checked;
       const bestFitChecked = document.getElementById("bestFit").checked;
 
-      // Validation
       if (xValues.length !== yValues.length) {
         alert("X and Y values must have the same number of elements.");
         return;
       }
 
-      // Destroy existing charts if they exist
       if (normalGraphChart) normalGraphChart.destroy();
       if (curveGraphChart) curveGraphChart.destroy();
       if (bestFitChart) bestFitChart.destroy();
 
-      // Normal Graph
       if (normalGraphChecked) {
         const ctx = document.getElementById("normalGraphCanvas").getContext("2d");
         document.getElementById("normalGraphBox").style.display = "block";
@@ -144,7 +198,7 @@
               backgroundColor: 'rgba(0, 0, 255, 0.1)',
               borderWidth: 2,
               fill: false,
-              tension: 0, // No curve
+              tension: 0,
             }]
           },
           options: {
@@ -159,7 +213,6 @@
         document.getElementById("normalGraphBox").style.display = "none";
       }
 
-      // Curve Lines Graph
       if (curveLinesChecked) {
         const ctx = document.getElementById("curveGraphCanvas").getContext("2d");
         document.getElementById("curveGraphBox").style.display = "block";
@@ -174,7 +227,7 @@
               backgroundColor: 'rgba(0, 255, 0, 0.1)',
               borderWidth: 2,
               fill: false,
-              tension: 0.4, // Smooth curve
+              tension: 0.4,
             }]
           },
           options: {
@@ -189,7 +242,6 @@
         document.getElementById("curveGraphBox").style.display = "none";
       }
 
-      // Best Fit Line Graph
       if (bestFitChecked) {
         const { slope, intercept } = calculateBestFitLine(xValues, yValues);
         const bestFitData = xValues.map(x => slope * x + intercept);
@@ -244,7 +296,6 @@
       const sumXY = xValues.map((x, i) => x * yValues[i]).reduce((a, b) => a + b, 0);
       const sumX2 = xValues.map(x => x * x).reduce((a, b) => a + b, 0);
 
-      // Calculate slope (m) and intercept (b)
       const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
       const intercept = (sumY - slope * sumX) / n;
 
